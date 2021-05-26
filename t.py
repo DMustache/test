@@ -1,10 +1,25 @@
-def cutter(letter, count):
-    return [[letter[i] for i in range(len(letter)) if ( i % count) == r] for r in range(count)]
+#region Мешает части предложения между собой
 letter = 'Если плоскость проходит через данную прямую, параллельную другой плоскости, и пересекает эту плоскость, то прямая пересечения плоскостей параллельна данной прямой'
-letter = list(letter.split(' '))
-difficulty = [3, 4, 5]
-#select = int(input(f'Выберите уровень сложность:\n1 - {difficulty[0]} части.\n2 - {difficulty[0]} части.\n3 - {difficulty[0]} частей.\n'))
 
-new = cutter(letter, 3)
+import random
+def chunk(st, lns):
+    mv = st.split()
+    mv = [' '.join(mv[x:x+lns]) for x in range(0, len(mv), lns)]
+    return ' '.join(random.sample(mv, len(mv)))
 
-print(new)
+print(chunk(letter, 3))
+#endregion
+
+#region autocmplete
+import readline
+
+def completer(text, state):
+    options = [i for i in commands if i.startswith(text)]
+    if state < len(options):
+        return options[state]
+    else:
+        return None
+
+readline.parse_and_bind('tab: complete')
+readline.set_completer(completer)
+#endregion

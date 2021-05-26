@@ -12,6 +12,11 @@ def check(phrase):
 class phraseSaver():
     phraselist = r'letters.csv'
 
+    def chunk(letter, lns):
+        mv = letter.split()
+        letter = [' '.join(mv[x:x+lns]) for x in range(0, len(mv), lns)]
+        return ' '.join(random.sample(mv, len(mv)))
+
     def appendPhraseslist():
         with open(phraseSaver.phraselist, mode='a', encoding='utf-8') as saver:
             writer = csv.writer(saver)
@@ -63,21 +68,23 @@ class phraseSaver():
         print(f'Вы правильно собрали фразу за {round(time.time() - Stime, 2)} сек.')
 
     def startCombineLetter():#Перемешиваются эдемнеты внутри двумерного массива, на не среди элемнтов массива
-        phrase = phraseSaver.selectPhrase()
+        phrase = ' '.join(phraseSaver.selectPhrase())
+        print(phrase)
 
         difficulty = [3, 4, 5]
-        difficultySelected = difficulty[int(input(f'Выберите уровень сложность:\n1 - {difficulty[0]} части.\n2 - {difficulty[1]} части.\n3 - {difficulty[2]} частей.\n')) - 1]
-        print(f'Ваша фраза для запоминания: {" ".join(phrase)}')
+        difficultySelected = difficulty[int(input(f'Выберите уровень сложности:\n1 - {difficulty[0]} части.\n2 - {difficulty[1]} части.\n3 - {difficulty[2]} частей.\n')) - 1]
+        print(f'Ваша фраза для запоминания: {phrase}')
 
         str(input('Введите что либо чтобы начать игру.'))
         os.system('cls')
 
-        shafled = phrase
+        shafled = phraseSaver.chunk(phrase, difficultySelected)
         while shafled == phrase:
-            shafled = phraseSaver.divideByDifficulty(phrase, difficultySelected)
-        print([[elem for elem in lt] for lt in shafled])
+            shafled = phraseSaver.chunk(phrase, difficulty[difficultySelected - 1])
+        print(shafled)
+
         Stime = time.time()
-        while str(input('Введите фразу правильно: ')) != ' '.join(phrase):
+        while str(input('Введите фразу правильно: ')) != phrase:
             print("\033[A                                                                                                                \033[A")
             continue
 
