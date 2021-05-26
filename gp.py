@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import csv, random, os, time
+import csv, random, os, time, colorama
+from colorama.ansi import Style
 
 def check(phrase):
     checklist = ['да','lf','ok','щл','yes','нуы']
@@ -65,7 +66,7 @@ class phraseSaver():
             print("\033[A                                                                                                                \033[A")
             continue
 
-        print(f'Вы правильно собрали фразу за {round(time.time() - Stime, 2)} сек.')
+        print(f'{colorama.Fore.GREEN}Вы правильно собрали фразу за {round(time.time() - Stime, 2)} сек.{Style.RESET_ALL}')
 
     def startCombineLetter():#Перемешиваются эдемнеты внутри двумерного массива, на не среди элемнтов массива
         phrase = ' '.join(phraseSaver.selectPhrase())
@@ -88,7 +89,7 @@ class phraseSaver():
             print("\033[A                                                                                                                \033[A")
             continue
 
-        print(f'Вы правильно собрали фразу за {round(time.time() - Stime, 2)} сек.')
+        print(f'{colorama.Fore.GREEN}Вы правильно собрали фразу за {round(time.time() - Stime, 2)} сек.{Style.RESET_ALL}')
 
 if __name__=='__main__':
 
